@@ -2,6 +2,14 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  # Public routes
+  get '/sign-in', to: 'sessions#new'
+
+  get '/sign-up', to: 'users#new'
+
+  resources :courses
+  resources :teachers
+
   # System routes
   if Rails.env.development?
     mount Sidekiq::Web, at: '/sidekiq' if Rails.env.development?
