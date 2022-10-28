@@ -1,4 +1,10 @@
 module ThemeHelper
+  def theme_image_tag(source, options = {})
+    source = "#{theme_prefix.tr('-', '_')}#{Setting.current_theme}/#{source}"
+
+    image_tag(source, options)
+  end
+
   def themes_path
     THEMES_PATH
   end

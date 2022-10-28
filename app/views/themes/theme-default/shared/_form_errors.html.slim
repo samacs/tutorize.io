@@ -1,0 +1,10 @@
+- if resource.errors.any?
+  .alert.alert-danger role="alert"
+    h4.alert-heading
+      i.bi.bi-exclamation-circle-fill.me-2
+      = t('.heading')
+    p = t('.explanation', count: resource.errors.count)
+    hr
+    ul
+      - resource.errors.full_messages.each do |message|
+        li = message

@@ -1,0 +1,28 @@
+en:
+  users:
+    create:
+      heading: "Great %{user_name}!"
+      message: |
+        Please check your email and follow the instructions to confirm and active your account.
+        Once you confirm your account you will be able to <strong>%{sign_in_link}</strong>".
+      link:
+        sign_in: "sign in"
+    form:
+      placeholder:
+        first_name: "Your first name"
+        last_name: "Your last name"
+        email: "Your email address"
+        password: "Choose a password"
+        password_confirmation: "Confirm your password"
+      button:
+        submit: "Sign up"
+      label:
+        terms_of_service: "I accept the %{link}"
+        teacher_or_student: "Are you a student or a teacher?"
+      option:
+        i_am_a_teacher: "I'm a teacher"
+        i_am_a_student: "I'm a student"
+      link:
+        terms_of_service: "Terms of Service"
+        sign_in: "Already have an account? Sign in!"
+        resend_confirmation: "Didn't receive your confirmation email?"

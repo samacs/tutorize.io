@@ -1,7 +1,7 @@
 nav#navbar.navbar.order-last.order-lg-0
   ul
     li
-      a.active href=root_path
+      a href=root_path
         | Home
     li
       a href=courses_path
@@ -10,7 +10,7 @@ nav#navbar.navbar.order-last.order-lg-0
       a href=teachers_path
         | Teachers
     li
-      a href="#pricing"
+      a href=static_pages_path(page: 'pricing')
         | Pricing
     li
       a href=static_pages_path(page: 'about')

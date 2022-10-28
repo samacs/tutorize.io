@@ -1,0 +1,7 @@
+en:
+  shared:
+    form_errors:
+      heading: "Oops! Something went wrong."
+      explanation:
+        one: "An occurred, please review the following information:"
+        other: "%{count} errors occurred, please review the following information:"

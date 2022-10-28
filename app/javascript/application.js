@@ -11,3 +11,5 @@ import 'controllers'
 AOS.init()
 
 new PureCounter()
+
+document.addEventListener('turbo:load', () => {})

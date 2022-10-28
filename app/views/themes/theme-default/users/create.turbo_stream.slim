@@ -1,0 +1,8 @@
+ruby:
+  sign_in_link = link_to t('.link.sign_in'), sign_in_path
+
+= turbo_stream.replace form_id do
+  .alert.alert-success role="alert"
+    h4.alert-heading = t('.heading', user_name: user.first_name)
+    hr
+    p == t('.message', sign_in_link:)
