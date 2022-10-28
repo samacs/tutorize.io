@@ -37,5 +37,5 @@
 
 /coverage/
 
-.env
-!.env.example
+.env*
+!.env*.example
