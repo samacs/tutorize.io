@@ -53,6 +53,9 @@ module Tutorize
     config.active_job.queue_adapter = :sidekiq
     config.action_mailer.deliver_later_queue_name = :mailers
 
+    config.i18n.available_locales = %i[en es]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = %i[en]
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,ya?ml}')]
 
     config.default_url_options = { host: host, port: port }
