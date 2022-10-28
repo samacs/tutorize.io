@@ -6,7 +6,7 @@ RSpec.describe 'Static pages' do
       it 'shows the welcome message' do
         visit root_path
 
-        expect(page).to have_content(/welcome/i)
+        expect(page).to have_content(/learning today,leading tomorrow/i)
       end
     end
   end
