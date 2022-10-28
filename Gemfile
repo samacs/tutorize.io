@@ -23,6 +23,7 @@ gem 'sidekiq-cron'
 gem 'slim'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
+gem 'storext', github: 'erikaxel/storext'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
