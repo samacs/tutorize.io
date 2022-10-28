@@ -1,0 +1,113 @@
+version: "3.8"
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.development
+    args:
+      RUBY_VERSION: ${RUBY_VERSION:-3.1.2}
+      PG_MAJOR: ${PJ_MAYOR:-14}
+      BUNDLER_VERSION: ${BUNDLER_VERSION:-2.3.24}
+      NODE_MAJOR: ${NODE_MAJOR:-16}
+      YARN_VERSION: ${YARN_VERSION:-1.22.19}
+  image: ${DOCKER_REGISTRY:-tutorize}/tutorize.io:${TAG:-latest}
+  env_file:
+    - .env
+  environment: &environment
+    RAILS_ENV: ${RAILS_ENV:-development}
+  tmpfs:
+    - /tmp
+    - /app/tmp/pids
+
+x-backend: &backend
+  <<: *app
+  stdin_open: true
+  tty: true
+  volumes:
+    - .:/app:cached
+    - bundle:/usr/local/bundle
+    - rails-cache:/app/tmp/cache
+    - history:/usr/local/history
+    - .psqlrc:/root/.psqlrc:ro
+    - .bashrc:/root/.bashrc:ro
+  environment: &backend_environment
+    <<: *environment
+    MALLOC_ARENAM_MAX: 2
+    WEB_CONCURRENCY: ${WEB_CONCURRENCY:-1}
+    XDG_DATA_HOME: /app/tmp/cache
+    HISTFILE: /usr/local/history/.bash_history
+    PSQL_HISTFILE: /usr/local/history/.psql_history
+    IRB_HISTORY: /usr/local/history/.irb_history
+    EDITOR: vim
+  depends_on: &backend_depends_on
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  rails:
+    <<: *backend
+    container_name: tutorize-rails
+    hostname: tutorize-rails
+    command: ./bin/rails server -b "ssl://0.0.0.0:$PORT/?key=ssl/tutorize.io.local.key&cert=ssl/tutorize.io.local.pem"
+    environment:
+      PORT: ${PORT:-3000}
+    ports:
+      - "3000:3000"
+      - "3100:3100"
+
+  sidekiq:
+    <<: *backend
+    container_name: tutorize-sidekiq
+    hostname: tutorize-sidekiq
+    command: bundle exec sidekiq -C config/sidekiq.yml
+
+  postgres:
+    container_name: tutorize-postgres
+    hostname: tutorize-postgres
+    image: postgres:${PG_MAJOR:-14}
+    volumes:
+      - .psqlrc:/root/.psqlrc:ro
+      - postgres-data:/var/lib/postgresql/data
+      - history:/usr/local/history
+    env_file:
+      - .env
+    environment:
+      PSQL_HISTFILE: /usr/local/history/.psql_history
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER:-tutorize} -d ${POSTGRES_DB:-tutorize_development} -h 127.0.0.1
+      interval: 5s
+
+  redis:
+    container_name: tutorize-redis
+    hostname: tutorize-redis
+    image: redis:${REDIS_MAJOR:-6}
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-tutorize}
+    volumes:
+      - redis-data:/data
+    env_file:
+      - .env
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  selenium:
+    container_name: tutorize-selenium
+    hostname: tutorize-selenium
+    image: selenium/standalone-chrome
+    ports:
+      - "4444:4444"
+      - "5900:5900"
+      - "7900:7900"
+    depends_on:
+      - rails
+
+volumes:
+  bundle:
+  rails-cache:
+  history:
+  postgres-data:
+  redis-data:

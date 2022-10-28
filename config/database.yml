@@ -1,0 +1,20 @@
+---
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
+  host: <%= ENV.fetch('DATABASE_HOSTNAME', 'tutorize-postgres') %>
+  port: <%= ENV.fetch('DATABASE_PORT', 5432).to_i %>
+  username: <%= ENV.fetch('DATABASE_USERNAME', 'tutorize') %>
+  password: <%= ENV.fetch('DATABASE_PASSWORD', 'tutorize') %>
+  database: <%= ENV.fetch('DATABASE_PREFIX', 'tutorize') %>_<%= Rails.env %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

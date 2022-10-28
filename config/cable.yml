@@ -1,0 +1,14 @@
+---
+default: &default
+  adapter: redis
+  url: <%= ENV.fetch('REDIS_URL', 'redis://:tutorize@tutorize-redis:6379/0') %>
+  channel_prefix: tutorize_<%= Rails.env %>
+
+development:
+  <<: *default
+
+test:
+  adapter: test
+
+production:
+  <<: *default

@@ -1,0 +1,14 @@
+---
+:concurrency: 10
+:timeout: 25
+
+:queues:
+  - critical
+  - default
+  - mailers
+  - <%= `hostname`.strip %>
+  - low
+
+production:
+  :concurrency: 25
+  :verbose: false
