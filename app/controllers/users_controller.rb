@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :find_user_for_confirmation, only: :confirm
+
   decorates_assigned :user
 
   add_body_classes 'sign-up'
@@ -19,11 +21,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def confirm
+    return redirect_to root_path, error: t('.error') if @user.blank?
+    return redirect_to root_path, error: @user.errors.full_messages.to_sentence unless @user.confirm!
+
+    redirect_to sign_in_path, success: t('.success')
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password,
                                  :password_confirmation, :terms_of_service,
                                  :sign_up_role)
+  end
+
+  def find_user_for_confirmation
+    email = params[:email]
+    confirmation_token = params[:confirmation_token]
+
+    return redirect_to root_path if email.blank? && confirmation_token.blank?
+
+    @user = User.by_email(email)
+                .by_confirmation_token(confirmation_token)
+                .first
   end
 end

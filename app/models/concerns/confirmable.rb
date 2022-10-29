@@ -4,6 +4,8 @@ module Confirmable
   included do
     include Tokenizable unless self <= Tokenizable
 
+    scope :by_confirmation_token, ->(confirmation_token) { where(confirmation_token:) }
+
     validates :confirmation_token,
               uniqueness: true,
               on: :create
