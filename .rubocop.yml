@@ -25,3 +25,17 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Exclude:
     - "db/migrate/*.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - config/environments/*.rb
+    - Gemfile
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/Focus:
+  AutoCorrect: false

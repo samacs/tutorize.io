@@ -16,7 +16,11 @@ class User < ApplicationRecord
   validates :first_name,
             :last_name,
             :confirmation_token,
+            :email,
             presence: true
+  validates :email,
+            uniqueness: { case_insensitive: true },
+            format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password,
             confirmation: true,
             presence: true,

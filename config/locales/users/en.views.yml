@@ -1,5 +1,7 @@
 en:
   users:
+    new:
+      heading: "Sign up"
     create:
       heading: "Great %{user_name}!"
       message: |

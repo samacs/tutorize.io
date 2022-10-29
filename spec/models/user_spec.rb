@@ -24,5 +24,8 @@ RSpec.describe User do
     # it { is_expected.to validate_presence_of(:confirmation_token) }
     it { is_expected.to validate_confirmation_of(:password) }
     it { is_expected.to validate_acceptance_of(:terms_of_service).on(:create) }
+    it { is_expected.to allow_value('user@example.com').for(:email) }
+    it { is_expected.not_to allow_value('user').for(:email) }
+    it { is_expected.not_to allow_value('@example.com').for(:email) }
   end
 end

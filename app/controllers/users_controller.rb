@@ -15,8 +15,9 @@ class UsersController < ApplicationController
         #       * Assign the given role
         #       * Send the confirmation email
         # TODO: Update this to redirect to the sign in form.
+        logger.debug "User: #{@user.inspect}"
         format.turbo_stream
-        format.html { redirect_to root_path }
+        format.html { redirect_to root_path, status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
