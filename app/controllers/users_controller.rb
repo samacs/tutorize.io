@@ -11,11 +11,6 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        # TODO: Call a service to finish the sign up process:
-        #       * Assign the given role
-        #       * Send the confirmation email
-        # TODO: Update this to redirect to the sign in form.
-        logger.debug "User: #{@user.inspect}"
         format.turbo_stream
         format.html { redirect_to root_path, status: :created }
       else

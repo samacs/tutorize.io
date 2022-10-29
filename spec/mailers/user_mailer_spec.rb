@@ -4,7 +4,9 @@ RSpec.describe UserMailer do
   describe '#confirmation_email' do
     describe 'when a user is created' do
       it 'sends the confirmation email' do
-        expect { create(:user) }.to have_enqueued_job.on_queue('mailers').exactly(:twice)
+        Sidekiq::Testing.inline! do
+          expect { create(:user) }.to have_enqueued_job.on_queue('mailers').exactly(:twice)
+        end
       end
 
       it 'has the right content' do

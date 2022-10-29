@@ -51,25 +51,49 @@ RSpec.describe 'Sign up' do
 
     context 'when validation passes' do
       it 'displays the success message', js: true do
-        user_attributes = attributes_for(:user)
-        fill_in_sign_up_form(user_attributes, submit: true)
+        Sidekiq::Testing.inline! do
+          user_attributes = attributes_for(:user)
+          fill_in_sign_up_form(user_attributes, submit: true)
 
-        # TODO: This is not working with Turbo, so testing the user at the bottom
-        # expect { click_button t('users.form.button.submit') }.to change(User, :count).by(1)
+          expect(page).to have_current_path sign_up_path
+          expect(page).to have_content t('users.create.heading', user_name: user_attributes[:first_name])
+          expect(page).to have_link t('users.create.link.sign_in'), href: sign_in_path
 
-        expect(page).to have_current_path sign_up_path
-        expect(page).to have_content t('users.create.heading', user_name: user_attributes[:first_name])
-        expect(page).to have_link t('users.create.link.sign_in'), href: sign_in_path
+          user = User.find_by(email: user_attributes[:email])
 
-        user = User.find_by(email: user_attributes[:email])
-
-        expect(user).not_to be_nil
-        expect(user.first_name).to eq user_attributes[:first_name]
-        expect(user.last_name).to eq user_attributes[:last_name]
-        expect(user.terms_of_service).to be true
-        expect(user.needs_confirmation?).to be true
-        expect(user.confirmation_token_sent_at).not_to be_nil
+          expect(user).not_to be_nil
+          expect(user.first_name).to eq user_attributes[:first_name]
+          expect(user.last_name).to eq user_attributes[:last_name]
+          expect(user.terms_of_service).to be true
+          expect(user.needs_confirmation?).to be true
+          expect(user.confirmation_token_sent_at).not_to be_nil
+        end
       end
+    end
+
+    shared_examples_for 'sign up as a student or teacher' do
+      it 'assigns the correct role' do
+        Sidekiq::Testing.inline! do
+          user_attributes = attributes_for(role_name)
+          fill_in_sign_up_form(user_attributes, submit: true)
+
+          user = User.find_by(email: user_attributes[:email])
+
+          expect(user).to have_role(role_name)
+        end
+      end
+    end
+
+    context 'when a student signs up' do
+      let(:role_name) { :student }
+
+      it_behaves_like 'sign up as a student or teacher'
+    end
+
+    context 'when a teacher signs up' do
+      let(:role_name) { :teacher }
+
+      it_behaves_like 'sign up as a student or teacher'
     end
   end
 end

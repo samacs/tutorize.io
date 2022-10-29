@@ -9,7 +9,7 @@ class ServiceBase
     private
 
     def actions
-      warn 'Please override this method and include your service actions'
+      raise 'Please override this method and include your service actions'
     end
   end
 end
