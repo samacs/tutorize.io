@@ -51,32 +51,24 @@ RSpec.describe 'Sign up' do
 
     context 'when validation passes' do
       it 'displays the success message', js: true do
-        first_name = Faker::Name.first_name
-        last_name = Faker::Name.last_name
-        email = Faker::Internet.email
-        password = Faker::Internet.password
-        I18n.with_options(scope: 'activerecord.attributes.user') do |i18n|
-          fill_in i18n.t('first_name'), with: first_name
-          fill_in i18n.t('last_name'), with: last_name
-          fill_in i18n.t('email'), with: email
-          fill_in i18n.t('password'), with: password
-          fill_in i18n.t('password_confirmation'), with: password
-        end
-        find(:css, 'input[name="user[terms_of_service]"]').set(true)
-        click_button t('users.form.button.submit')
+        user_attributes = attributes_for(:user)
+        fill_in_sign_up_form(user_attributes, submit: true)
 
         # TODO: This is not working with Turbo, so testing the user at the bottom
         # expect { click_button t('users.form.button.submit') }.to change(User, :count).by(1)
 
         expect(page).to have_current_path sign_up_path
-        expect(page).to have_content t('users.create.heading', user_name: first_name)
+        expect(page).to have_content t('users.create.heading', user_name: user_attributes[:first_name])
         expect(page).to have_link t('users.create.link.sign_in'), href: sign_in_path
 
-        user = User.find_by(email: email)
+        user = User.find_by(email: user_attributes[:email])
 
         expect(user).not_to be_nil
-        expect(user.first_name).to eq first_name
-        expect(user.last_name).to eq last_name
+        expect(user.first_name).to eq user_attributes[:first_name]
+        expect(user.last_name).to eq user_attributes[:last_name]
+        expect(user.terms_of_service).to be true
+        expect(user.needs_confirmation?).to be true
+        # expect(user.confirmation_token_sent_at).not_to be_nil
       end
     end
   end

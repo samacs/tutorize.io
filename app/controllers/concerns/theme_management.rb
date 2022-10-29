@@ -23,7 +23,7 @@ module ThemeManagement
     end
 
     def display_breadcrumbs!(**options)
-      before_action -> { display_breadcrumbs(display: true) }, options
+      display_breadcrumbs(display: true, **options)
     end
   end
 
