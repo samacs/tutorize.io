@@ -5,7 +5,7 @@ RSpec.describe UserMailer do
     describe 'when a user is created' do
       it 'sends the confirmation email' do
         Sidekiq::Testing.inline! do
-          expect { create(:user) }.to have_enqueued_job.on_queue('mailers').exactly(:twice)
+          expect { create(:user) }.to have_enqueued_job.on_queue('mailers').exactly(:once)
         end
       end
 
@@ -55,5 +55,20 @@ RSpec.describe UserMailer do
 
       it_behaves_like 'welcome email'
     end
+  end
+
+  shared_examples_for 'role based email' do |role_name|
+    it 'sends the role based welcome email' do
+      user = create(role_name)
+      Sidekiq::Testing.inline! { expect { user.confirm! }.to have_enqueued_job.on_queue('mailers').exactly(:once) }
+    end
+  end
+
+  describe 'when a student is created' do
+    it_behaves_like 'role based email', :student
+  end
+
+  describe 'when a teacher is created' do
+    it_behaves_like 'role based email', :teacher
   end
 end

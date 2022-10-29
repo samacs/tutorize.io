@@ -15,9 +15,7 @@ module Confirmable
                       on: :create
 
     def confirm!
-      self.confirmed_at = Time.current
-
-      save!
+      ConfirmService.call(user: self)
     end
 
     def confirmation_token_sent!
