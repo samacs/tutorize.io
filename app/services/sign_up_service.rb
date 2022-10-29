@@ -3,8 +3,7 @@ class SignUpService < ServiceBase
     def actions
       [SignUp::CreateUserAction,
        SignUp::SendConfirmationEmailAction,
-       SignUp::AssignRoleAction,
-       SignUp::SendRoleEmailAction]
+       SignUp::AssignRoleAction]
     end
   end
 end

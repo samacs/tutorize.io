@@ -18,5 +18,6 @@ html[lang=I18n.locale]
   body class=body_classes.join(' ')
     = render 'layouts/header'
     = render 'layouts/breadcrumbs' if display_breadcrumbs?
+    = render 'layouts/flash_messages'
     main#main = yield
     = render 'layouts/footer'

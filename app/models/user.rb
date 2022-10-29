@@ -20,6 +20,8 @@ class User < ApplicationRecord
     locale String, default: DEFAULT_LOCALE
   end
 
+  scope :by_email, ->(email) { where(email:) }
+
   validates :first_name,
             :last_name,
             :confirmation_token,

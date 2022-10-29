@@ -1,0 +1,5 @@
+en:
+  users:
+    confirm:
+      success: "Great! Your account has been confirmed. You can now sign in!"
+      error: "An error occurred while confirming your account. Please check you email and follow the instructions in the confirmation email."

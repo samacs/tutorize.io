@@ -1,5 +1,5 @@
-module SignUp
-  class SendRoleEmailAction < ActionBase
+module Confirm
+  class SendWelcomeEmailAction < ActionBase
     expects :user
 
     executed do |ctx|

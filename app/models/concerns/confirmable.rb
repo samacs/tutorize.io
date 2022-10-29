@@ -4,6 +4,8 @@ module Confirmable
   included do
     include Tokenizable unless self <= Tokenizable
 
+    scope :by_confirmation_token, ->(confirmation_token) { where(confirmation_token:) }
+
     validates :confirmation_token,
               uniqueness: true,
               on: :create
@@ -13,9 +15,7 @@ module Confirmable
                       on: :create
 
     def confirm!
-      self.confirmed_at = Time.current
-
-      save!
+      ConfirmService.call(user: self)
     end
 
     def confirmation_token_sent!

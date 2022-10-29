@@ -36,7 +36,7 @@ module ThemeManagement
   end
 
   def display_breadcrumbs?
-    @should_display_breadcrumbs || true
+    @should_display_breadcrumbs && true
   end
 
   def use_global_theme

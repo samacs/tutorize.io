@@ -1,0 +1,9 @@
+- if flash.any?
+  .container.fixed-top.flash-alert-container.mx-auto
+    - flash.each do |type, message|
+      .alert.d-flex.align-items-center.alert-dismissible.fade.show[
+        class=flash_alert_class(type)
+      ]
+        = flash_alert_icon(type)
+        = message
+        button.btn-close type="button" data-bs-dismiss="alert"
