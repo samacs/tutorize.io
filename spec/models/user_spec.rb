@@ -10,7 +10,7 @@ RSpec.describe User do
   end
 
   describe 'has a valid factory' do
-    subject(:user) { create(:user) }
+    subject(:user) { build(:user) }
 
     it { is_expected.to be_valid }
   end

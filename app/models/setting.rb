@@ -17,7 +17,7 @@ class Setting < RailsSettings::Base
         type: :string,
         default: default_backend_theme,
         validates: { inclusion: { in: themes } }
-  field :default_email_from,
+  field :default_email_address,
         type: :string,
         default: 'hello@tutorize.io',
         validates: { presence: true }
@@ -25,4 +25,10 @@ class Setting < RailsSettings::Base
         type: :string,
         default: 'Tutorize',
         validates: { presence: true }
+
+  class << self
+    def default_email_from
+      "#{default_email_name} <#{default_email_address}>"
+    end
+  end
 end

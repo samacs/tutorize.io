@@ -5,13 +5,22 @@ class User < ApplicationRecord
 
   DEFAULT_TIME_ZONE = 'UTC'.freeze
   DEFAULT_LOCALE    = 'en'.freeze
+  TEACHER_ROLE      = 'teacher'.freeze
+  STUDENT_ROLE      = 'student'.freeze
+  SIGN_UP_ROLES     = [TEACHER_ROLE, STUDENT_ROLE].freeze
 
   has_secure_password
+
+  has_person_name
+
+  rolify
 
   store_attributes :preferences do
     time_zone String, default: DEFAULT_TIME_ZONE
     locale String, default: DEFAULT_LOCALE
   end
+
+  attr_writer :sign_up_role
 
   validates :first_name,
             :last_name,
@@ -29,10 +38,18 @@ class User < ApplicationRecord
             acceptance: { accepts: true },
             allow_nil: false,
             on: :create
+  validates :sign_up_role,
+            inclusion: { in: SIGN_UP_ROLES }
 
   before_validation :downcase_email!
 
   before_create :set_default_preferences
+
+  after_create :sign_up!
+
+  def sign_up_role
+    @sign_up_role ||= roles.order(created_at: :desc).where(name: %i[teacher student]).first&.name
+  end
 
   def password=(value)
     @changing_password = true if value.present?
@@ -58,5 +75,9 @@ class User < ApplicationRecord
 
   def default_preferences
     { 'time_zone' => DEFAULT_TIME_ZONE, 'locale' => DEFAULT_LOCALE }
+  end
+
+  def sign_up!
+    SignUpService.call(user: self)
   end
 end

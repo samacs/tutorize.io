@@ -39,11 +39,11 @@ module Confirmable
       confirm!
     end
 
-    private
-
     def skip_confirmation?
       @skip_confirmation || false
     end
+
+    private
 
     def generate_confirmation_token
       generate_token(:confirmation_token)

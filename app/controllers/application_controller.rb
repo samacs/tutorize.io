@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   include ThemeManagement
 
-  helper_method :form_id, :generate_form_id
+  helper_method :form_id, :generate_form_id, :display_breadcrumbs?
+
+  display_breadcrumbs!
 
   protected
 

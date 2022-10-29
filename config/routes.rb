@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/sign-up', to: 'users#new'
   post '/sign-up', to: 'users#create'
 
+  get '/confirm', to: 'users#confirm'
+
   resources :courses
   resources :teachers
 

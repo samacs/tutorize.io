@@ -2,8 +2,8 @@ ruby:
   terms_of_service_link = link_to t('.link.terms_of_service'),
                                   static_pages_path(:terms_of_service),
                                   tabindex: -1
-  role_options = options_for_select([[t('.option.i_am_a_student'), 'student'],
-                                     [t('.option.i_am_a_teacher'), 'teacher']])
+  sign_up_role_options = [[t('.option.i_am_a_student'), User::STUDENT_ROLE],
+                          [t('.option.i_am_a_teacher'), User::TEACHER_ROLE]]
 
 = form_with(model: user, url: sign_up_path, role: 'form', id: form_id) do |f|
   = hidden_field_tag :form_id, form_id
@@ -38,8 +38,8 @@ ruby:
                          placeholder: t('.placeholder.password_confirmation')
   .row
     .col.form-group.mb-3
-      = label_tag :role, t('.label.teacher_or_student')
-      = select_tag :role, role_options, class: 'form-select'
+      = f.label :sign_up_role, t('.label.teacher_or_student')
+      = f.select :sign_up_role, sign_up_role_options, {}, class: 'form-select'
   .row
     .col.md-6.form-group.mb-3
       .form-check

@@ -68,7 +68,7 @@ RSpec.describe 'Sign up' do
         expect(user.last_name).to eq user_attributes[:last_name]
         expect(user.terms_of_service).to be true
         expect(user.needs_confirmation?).to be true
-        # expect(user.confirmation_token_sent_at).not_to be_nil
+        expect(user.confirmation_token_sent_at).not_to be_nil
       end
     end
   end

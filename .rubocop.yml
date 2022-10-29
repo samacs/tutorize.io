@@ -28,8 +28,8 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Exclude:
-    - config/environments/*.rb
-    - Gemfile
+    - "config/environments/*.rb"
+    - "Gemfile"
 
 RSpec/MultipleExpectations:
   Enabled: false
@@ -39,3 +39,7 @@ RSpec/ExampleLength:
 
 RSpec/Focus:
   AutoCorrect: false
+
+Rails/HelperInstanceVariable:
+  Exclude:
+    - "app/views/**/mailers/**/*.slim"

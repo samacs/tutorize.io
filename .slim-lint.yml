@@ -1,0 +1,4 @@
+linters:
+  Rails/HelperInstanceVariable:
+    Exclude:
+      - "app/views/**/mailers/**/*.slim"

@@ -13,5 +13,6 @@ RSpec.shared_examples_for Confirmable do
     its(:confirmed_at) { is_expected.not_to be_nil }
     its(:confirmed?) { is_expected.to be true }
     its(:needs_confirmation?) { is_expected.to be false }
+    its(:skip_confirmation?) { is_expected.to be true }
   end
 end

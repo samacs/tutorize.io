@@ -1,0 +1,13 @@
+en:
+  user_mailer:
+    confirmation_email:
+      subject: "Hello, %{user_name}!"
+      heading: "Welcome, %{user_name}!"
+      link:
+        confirm: "Confirm your account"
+    student_welcome_email:
+      subject: "Hello, %{user_name}!"
+      heading: "Welcome, %{user_name}!"
+    teacher_welcome_email:
+      subject: "Hello, %{user_name}!"
+      heading: "Welcome, %{user_name}!"

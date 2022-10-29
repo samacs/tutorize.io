@@ -1,0 +1,5 @@
+h1 = t('.heading', user_name: @user.first_name)
+
+= link_to t('.link.confirm'),
+          confirm_url(email: @user.email,
+                      confirmation_token: @user.confirmation_token)
