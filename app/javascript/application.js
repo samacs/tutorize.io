@@ -8,8 +8,8 @@ import PureCounter from '@srexi/purecounterjs'
 
 import 'controllers'
 
-AOS.init()
+document.addEventListener('turbo:load', () => {
+    AOS.init()
 
-new PureCounter()
-
-document.addEventListener('turbo:load', () => {})
+    new PureCounter()
+})

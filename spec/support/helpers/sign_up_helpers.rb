@@ -3,6 +3,10 @@ module SignUpHelpers
     sign_up(user_attributes, role: 'student')
   end
 
+  def sign_up_as_teacher(user_attributes)
+    sign_up(user_attributes, role: 'teacher')
+  end
+
   def sign_up(user_attributes, role: 'student')
     visit sign_up_path
 

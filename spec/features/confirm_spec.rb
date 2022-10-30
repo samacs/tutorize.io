@@ -14,8 +14,6 @@ RSpec.describe 'Confirm' do
   end
 
   describe 'when the user is found' do
-    before { user.add_role(user.sign_up_role) }
-
     it 'confirms the user and is redirected to the sign in page' do
       visit confirm_path(email:, confirmation_token:)
 

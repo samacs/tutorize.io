@@ -1,0 +1,27 @@
+ruby:
+  reset_password_link = link_to t('.link.reset_password'),
+                                static_pages_path(:reset_pasword),
+                                tabindex: -1
+  sign_up_link = link_to t('.link.sign_up'), sign_up_path
+
+= form_with(model: user, url: sign_in_path, role: 'form', id: form_id) do |f|
+  = hidden_field_tag :form_id, form_id
+  .row
+    .col-md-8.form-group.mb-3
+      = f.label :email, class: 'form-label'
+      = f.email_field :email, class: 'form-control'
+  .row
+    .col-md-8.form-group.mb-3
+      = f.label :password, class: 'form-label'
+      = f.password_field :password, class: 'form-control'
+      .form-text.d-flex.align-items-start.justify-content-end
+        p = reset_password_link
+  .row
+    .col-md-2.mb-8.order-2.lg-order-1
+      .d-flex.justify-content-lg-end.align-items-center
+        = f.submit t('.button.submit'), class: 'btn btn-primary btn-block'
+    .col-md-6.mb-8.order-1.lg-order-2
+      .d-flex.justify-content-center.align-items-end.flex-column[
+        class="align-items-lg-start"
+      ]
+        = sign_up_link

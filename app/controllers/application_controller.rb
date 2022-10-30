@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   include ThemeManagement
+  include RedirectionManagement
+  include SessionManagement
 
   helper_method :form_id, :generate_form_id, :display_breadcrumbs?
 
   add_flash_types :success, :error, :warning, :info
-
-  display_breadcrumbs!
 
   protected
 

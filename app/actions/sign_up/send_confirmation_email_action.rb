@@ -5,7 +5,7 @@ module SignUp
     executed do |ctx|
       user = ctx.user
 
-      next if user.skip_confirmation?
+      next if user.confirmed? || user.skip_confirmation?
 
       UserMailer.with(user: user).confirmation_email.deliver_later
 

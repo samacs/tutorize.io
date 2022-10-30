@@ -8,6 +8,15 @@ FactoryBot.define do
     terms_of_service { true }
     sign_up_role { User::STUDENT_ROLE }
 
+    after(:create) do |user, _evaluator|
+      user.add_role user.sign_up_role unless user.has_role?(user.sign_up_role)
+    end
+
+    trait :confirmed do
+      confirmation_token_sent_at { Time.current }
+      confirmed_at { Time.current }
+    end
+
     trait :teacher do
       sign_up_role { User::TEACHER_ROLE }
     end
