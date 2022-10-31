@@ -1,9 +1,13 @@
 class ApplicationMailer < ActionMailer::Base
-  include ThemeManagement
-
   default from: Setting.default_email_from
 
   layout 'mailer'
 
-  before_action :use_current_theme
+  before_action :add_mailer_views
+
+  private
+
+  def add_mailer_views
+    prepend_view_path Rails.root.join('app/views/mailers')
+  end
 end

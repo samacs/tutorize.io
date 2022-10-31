@@ -1,0 +1,12 @@
+- content_for(:title, 'Sign up')
+
+section
+  .container
+    .row
+      .col-lg-6
+      .col-lg-6.pt-4
+        h3 = t('.heading')
+        p.fst-italic
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        = render 'form', user: @user, form_id: generate_form_id(@user)

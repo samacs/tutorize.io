@@ -1,4 +1,6 @@
-class StaticPagesController < FrontendController
+class StaticPagesController < ApplicationController
+  skip_before_action :require_user
+
   before_action :render_not_found, unless: :page_exists?
   before_action :call_before_render_page
 

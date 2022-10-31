@@ -1,5 +1,5 @@
 - if flash.any?
-  .container.fixed-top.flash-alert-container.mx-auto
+  .container.fixed-top.mt-5.mx-auto
     - flash.each do |type, message|
       .alert.d-flex.align-items-center.alert-dismissible.fade.show[
         class=flash_alert_class(type)

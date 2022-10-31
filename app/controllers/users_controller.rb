@@ -1,11 +1,9 @@
-class UsersController < FrontendController
+class UsersController < ApplicationController
+  skip_before_action :require_user
+
   before_action :require_no_user
 
   before_action :find_user_for_confirmation, only: :confirm
-
-  decorates_assigned :user
-
-  add_body_classes 'sign-up'
 
   def new
     @user = User.new
