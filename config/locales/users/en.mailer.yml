@@ -11,3 +11,9 @@ en:
     teacher_welcome_email:
       subject: "Hello, %{user_name}!"
       heading: "Welcome, %{user_name}!"
+    password_reset_email:
+      subject: "Hello, %{user_name}! Reset your password"
+      heading: "Instructions to reset your password"
+      instructions: "Click on the following link to update your password:"
+      link:
+        change_password: "Change your password"

@@ -13,6 +13,10 @@ class UserMailer < ApplicationMailer
     mail(subject: t('.subject', user_name: @user.first_name), to: @user.email)
   end
 
+  def password_reset_email
+    mail(subject: t('.subject', user_name: @user.first_name), to: @user.email)
+  end
+
   private
 
   def set_user

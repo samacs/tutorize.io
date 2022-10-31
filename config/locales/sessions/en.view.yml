@@ -3,9 +3,6 @@ en:
   sessions:
     new:
       heading: "Sign in"
-    create:
-      credentials_error: "Please check your credentials"
-      confirmation_error: "Please confirm your account. Check your email and follow the instructions."
     form:
       label:
         remember_me: "Remember me?"

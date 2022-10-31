@@ -1,0 +1,12 @@
+en:
+  password_resets:
+    new:
+      heading: "Reset your password"
+      button:
+        submit: "Reset your password"
+      label:
+        email: "Email address"
+    edit:
+      heading: "Update your password"
+      button:
+        submit: "Update password"

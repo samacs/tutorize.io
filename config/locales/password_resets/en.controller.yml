@@ -1,0 +1,14 @@
+en:
+  password_resets:
+    create:
+      success: |
+        An email with instructions to reset your password has been sent to your email address.
+      error: |
+        An error occurred. Please enter the email address you used to sign up.
+    update:
+      success: "Your password has been updated. You can now sign in."
+    edit:
+      user_not_found_error: |
+        We couldn't find your account. Please check your email address and follow the instructions to reset your password or start the process again with the right email address.
+      password_reset_token_expired_error: |
+        The time to reset your password has expired. Please enter your email address and start the process again.

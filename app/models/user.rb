@@ -9,6 +9,7 @@ class User < ApplicationRecord
   include Confirmable
   include Signupable
   include Sessionable
+  include PasswordResettable
 
   has_secure_password
 

@@ -12,6 +12,11 @@ FactoryBot.define do
       user.add_role user.sign_up_role unless user.has_role?(user.sign_up_role)
     end
 
+    trait :resetting_password do
+      password_reset_token_sent_at { Time.current }
+      password_reset_token { 'secret_token' }
+    end
+
     trait :confirmed do
       confirmation_token_sent_at { Time.current }
       confirmed_at { Time.current }
