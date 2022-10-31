@@ -1,0 +1,6 @@
+en:
+  sessions:
+    create:
+      credentials_error: "Please check your credentials"
+      confirmation_error: "Please confirm your account. Check your email and follow the instructions."
+      resetting_password_error: "Your password is being reset. Please check your email for the instructions to reset your password."

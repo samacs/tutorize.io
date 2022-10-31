@@ -13,6 +13,11 @@ Rails.application.routes.draw do
 
   get '/confirm', to: 'users#confirm'
 
+  get '/reset-password', to: 'password_resets#new'
+  post '/reset-password', to: 'password_resets#create'
+  get '/change-password', to: 'password_resets#edit'
+  patch '/change-password', to: 'password_resets#update'
+
   resources :courses
   resources :teachers
 

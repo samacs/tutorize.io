@@ -41,12 +41,11 @@ RSpec.describe 'Sign in' do
     context 'when the user is not found' do
       let(:email) { Faker::Internet.email }
       let(:password) { Faker::Internet.password }
+      let(:user) { create(:user, :confirmed, email:, password:) }
       let(:expected_error) { t('sessions.create.credentials_error') }
 
-      before { create(:user, :confirmed, email: email, password: password) }
-
       it 'displays the wrong credentials error' do
-        sign_in(email: 'wrong@email.com', password: password)
+        sign_in(email: 'wrong@email.com', password:)
 
         expect(page).to have_current_path sign_in_path
         expect(page).to have_content expected_error
@@ -55,6 +54,8 @@ RSpec.describe 'Sign in' do
 
     context 'when the user has not been confirmed' do
       let(:user) { create(:user) }
+      let(:email) { user.email }
+      let(:password) { user.password }
       let(:expected_error) { t('sessions.create.confirmation_error') }
 
       it 'displays the confirmation error' do
@@ -67,10 +68,25 @@ RSpec.describe 'Sign in' do
 
     context 'when the password is wrong' do
       let(:user) { create(:user, :confirmed) }
+      let(:email) { user.email }
       let(:expected_error) { t('sessions.create.credentials_error') }
 
       it 'displays the credentials error' do
-        sign_in(email: user.email, password: 'wrong_password')
+        sign_in(email:, password: 'wrong_password')
+
+        expect(page).to have_current_path sign_in_path
+        expect(page).to have_content expected_error
+      end
+    end
+
+    context 'when the user is resetting password' do
+      let(:user) { create(:user, :confirmed, :resetting_password) }
+      let(:email) { user.email }
+      let(:password) { user.password }
+      let(:expected_error) { t('sessions.create.resetting_password_error') }
+
+      it 'displays the resetting password error' do
+        sign_in(email:, password:)
 
         expect(page).to have_current_path sign_in_path
         expect(page).to have_content expected_error

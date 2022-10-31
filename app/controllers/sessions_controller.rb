@@ -4,8 +4,6 @@ class SessionsController < FrontendController
 
   before_action :set_user, only: :create
 
-  # decorates_assigned :user
-
   add_body_classes 'sign-in'
 
   def new
@@ -13,10 +11,8 @@ class SessionsController < FrontendController
   end
 
   def create
-    # TODO: Check if user is resetting password
-    return render :new, status: :unauthorized if user_not_found_error? ||
-                                                 confirmation_error? ||
-                                                 wrong_password_error?
+    return render :new, status: :unauthorized if user_not_found_error? || confirmation_error? ||
+                                                 resetting_password_error? || wrong_password_error?
 
     sign_in!(@user)
 
@@ -37,6 +33,12 @@ class SessionsController < FrontendController
     flash.now[:error] = t('.credentials_error')
 
     true
+  end
+
+  def resetting_password_error?
+    return false unless @user.resetting_password?
+
+    flash.now[:error] = t('.resetting_password_error')
   end
 
   def confirmation_error?
