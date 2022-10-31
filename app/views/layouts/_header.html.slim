@@ -1,0 +1,19 @@
+header.p-3.sticky-top.text-bg-dark.mb-2
+  .container
+    nav.d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
+      a.d-flex.align-items-center.mb-2.mb-lg-0.text-white.text-decoration-none href=root_path
+        span.fs-4
+          | Tutorize
+      ul.nav.col-12.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
+        li
+          a.nav-link.px-2.text-secondary href=root_path
+            | Home
+        li
+          a.nav-link.px-2.text-white href=courses_path
+            | Courses
+        li
+          a.nav-link.px-2.text-white href=teachers_path
+            | Teachers
+      .text-end
+        = link_to 'Sign in', sign_in_path, class: 'btn btn-outline-light me-2'
+        = link_to 'Sign up', sign_up_path, class: 'btn btn-warning'

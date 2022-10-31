@@ -1,10 +1,8 @@
-class SessionsController < FrontendController
+class SessionsController < ApplicationController
+  skip_before_action :require_user, except: :destroy
+
   before_action :require_no_user, only: %i[new create]
-  before_action :require_user, only: :destroy
-
   before_action :set_user, only: :create
-
-  add_body_classes 'sign-in'
 
   def new
     @user = User.new

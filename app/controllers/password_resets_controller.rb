@@ -1,9 +1,9 @@
-class PasswordResetsController < FrontendController
+class PasswordResetsController < ApplicationController
+  skip_before_action :require_user
+
   before_action :require_no_user
 
   before_action :set_user, only: %i[edit update]
-
-  add_body_classes 'reset-password'
 
   def new; end
 

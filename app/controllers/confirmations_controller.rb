@@ -1,7 +1,7 @@
-class ConfirmationsController < FrontendController
-  before_action :require_no_user
+class ConfirmationsController < ApplicationController
+  skip_before_action :require_user
 
-  add_body_classes 'resend-confirmation'
+  before_action :require_no_user
 
   def new; end
 

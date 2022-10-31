@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
   include RedirectionManagement
   include SessionManagement
 
-  helper_method :form_id, :generate_form_id, :display_breadcrumbs?
+  before_action :require_user
+
+  helper_method :form_id, :generate_form_id
 
   add_flash_types :success, :error, :warning, :info
 

@@ -2,11 +2,7 @@ module ThemeManagement
   extend ActiveSupport::Concern
 
   included do
-    include ThemeHelper
-
-    before_action :use_global_theme
-
-    helper_method :body_classes
+    helper_method :body_classes, :display_breadcrumbs?
 
     display_breadcrumbs!
   end
@@ -37,20 +33,5 @@ module ThemeManagement
 
   def display_breadcrumbs?
     @should_display_breadcrumbs && true
-  end
-
-  def use_global_theme
-    prepend_view_path "#{themes_path}/global"
-    prepend_view_path "#{themes_path}/global/mailers"
-  end
-
-  def use_current_theme
-    prepend_view_path current_theme_path
-    prepend_view_path "#{current_theme_path}/mailers"
-  end
-
-  def use_current_backend_theme
-    prepend_view_path current_backend_theme_path
-    prepend_view_path "#{current_backend_theme_path}/mailers"
   end
 end
