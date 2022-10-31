@@ -8,7 +8,8 @@ $alert-link-success: #198754;
 body {
     &.sign-up,
     &.sign-in,
-    &.reset-password {
+    &.reset-password,
+    &.resend-confirmation {
         form {
             input[type="submit"] {
                 background-color: $green-color;

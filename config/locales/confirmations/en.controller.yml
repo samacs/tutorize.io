@@ -1,0 +1,11 @@
+en:
+  confirmations:
+    new:
+      heading: "Resend confirmation email"
+      label:
+        email: "Email address"
+      button:
+        submit: "Resend confirmation"
+    create:
+      success: "Your confirmation email has been sent."
+      error: "Please check the email address you entered and try again."

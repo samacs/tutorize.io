@@ -1,9 +1,9 @@
 class SignUpService < ServiceBase
   class << self
     def actions
-      [SignUp::CreateUserAction,
-       SignUp::SendConfirmationEmailAction,
-       SignUp::AssignRoleAction]
+      [Users::CreateAction,
+       Users::SendConfirmationEmailAction,
+       Users::AssignRoleAction]
     end
   end
 end

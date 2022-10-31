@@ -1,8 +1,8 @@
 class ConfirmService < ServiceBase
   class << self
     def actions
-      [Confirm::ConfirmUserAction,
-       Confirm::SendWelcomeEmailAction]
+      [Users::ConfirmAction,
+       Users::SendWelcomeEmailAction]
     end
   end
 end

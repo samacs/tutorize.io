@@ -1,4 +1,4 @@
-module Confirm
+module Users
   class SendWelcomeEmailAction < ActionBase
     expects :user
 

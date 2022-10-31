@@ -1,9 +1,9 @@
 class ResetPasswordService < ServiceBase
   class << self
     def actions
-      [ResetPassword::FindUserByEmailAction,
-       ResetPassword::GeneratePasswordResetTokenAction,
-       ResetPassword::SendPasswordResetEmailAction]
+      [Users::FindByEmailAction,
+       Users::GeneratePasswordResetTokenAction,
+       Users::SendPasswordResetEmailAction]
     end
   end
 end

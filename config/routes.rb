@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get '/change-password', to: 'password_resets#edit'
   patch '/change-password', to: 'password_resets#update'
 
+  get '/resend-confirmation', to: 'confirmations#new'
+  post '/resend-confirmation', to: 'confirmations#create'
+
   resources :courses
   resources :teachers
 
