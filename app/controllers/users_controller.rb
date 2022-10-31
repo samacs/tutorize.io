@@ -1,4 +1,6 @@
-class UsersController < ApplicationController
+class UsersController < FrontendController
+  before_action :require_no_user
+
   before_action :find_user_for_confirmation, only: :confirm
 
   decorates_assigned :user

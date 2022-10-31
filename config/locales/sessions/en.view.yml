@@ -1,0 +1,13 @@
+en:
+  sign_out_link: "Sign out"
+  sessions:
+    new:
+      heading: "Sign in"
+    form:
+      label:
+        remember_me: "Remember me?"
+      link:
+        reset_password: "Forgot your password?"
+        sign_up: "Don't have an account? Sign up!"
+      button:
+        submit: "Sign in"

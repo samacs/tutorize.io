@@ -8,6 +8,8 @@ class User < ApplicationRecord
   include Tokenizable
   include Confirmable
   include Signupable
+  include Sessionable
+  include PasswordResettable
 
   has_secure_password
 

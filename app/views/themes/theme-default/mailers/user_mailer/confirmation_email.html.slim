@@ -1,5 +1,9 @@
-h1 = t('.heading', user_name: @user.first_name)
+ruby:
+  user_name = @user.first_name
+  email = @user.email
+  confirmation_token = @user.confirmation_token
+
+h1 = t('.heading', user_name:)
 
 = link_to t('.link.confirm'),
-          confirm_url(email: @user.email,
-                      confirmation_token: @user.confirmation_token)
+          confirm_url(email:, confirmation_token:)

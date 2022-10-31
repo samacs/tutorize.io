@@ -78,6 +78,8 @@ services:
     healthcheck:
       test: pg_isready -U ${POSTGRES_USER:-tutorize} -d ${POSTGRES_DB:-tutorize_development} -h 127.0.0.1
       interval: 5s
+    ports:
+      - "5432:5432"
 
   redis:
     container_name: tutorize-redis
@@ -93,6 +95,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    ports:
+      - "6379:6379"
 
   selenium:
     container_name: tutorize-selenium

@@ -1,0 +1,28 @@
+- content_for(:title, 'Change password')
+
+section#change-password.change-password
+  .container data-aos="fade-up"
+    .row
+      .col-lg-6.order-1.order-lg-2 data-aos="fade-left" data-aos-delay="100"
+        = theme_image_tag 'sign-in.jpg', class: 'img-fluid'
+      .col-lg-6.pt-4.pt-lg-0.order-2.order-lg-1.content
+        h3 = t('.heading')
+        p.fst-italic
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        = form_with(model: @user, url: change_password_path) do |f|
+          = render 'shared/form_errors', resource: @user
+          .row
+            .col-md-8.form-grou.mb-3
+              = f.label :password, class: 'form-label'
+              = f.password_field :password, class: 'form-control'
+          .row
+            .col-md-8.form-grou.mb-3
+              = f.label :password_confirmation, class: 'form-label'
+              = f.password_field :password_confirmation, class: 'form-control'
+          .row
+            .col-md-8.mb-3
+              .d-flex.justify-content-start.align-items-center[
+                class="justify-content-lg-end"
+              ]
+                = submit_tag t('.button.submit'), class: 'btn btn-primary'

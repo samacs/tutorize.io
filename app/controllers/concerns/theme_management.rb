@@ -4,11 +4,11 @@ module ThemeManagement
   included do
     include ThemeHelper
 
-    before_action :use_current_theme,
-                  :use_current_backend_theme,
-                  :use_global_theme
+    before_action :use_global_theme
 
     helper_method :body_classes
+
+    display_breadcrumbs!
   end
 
   class_methods do
@@ -41,25 +41,16 @@ module ThemeManagement
 
   def use_global_theme
     prepend_view_path "#{themes_path}/global"
+    prepend_view_path "#{themes_path}/global/mailers"
   end
 
   def use_current_theme
     prepend_view_path current_theme_path
+    prepend_view_path "#{current_theme_path}/mailers"
   end
 
   def use_current_backend_theme
     prepend_view_path current_backend_theme_path
-  end
-
-  def use_current_theme_mailers
-    prepend_view_path "#{current_theme_path}/mailers"
-  end
-
-  def use_current_backend_theme_mailers
     prepend_view_path "#{current_backend_theme_path}/mailers"
-  end
-
-  def use_global_mailers
-    prepend_view_path "#{themes_path}/global/mailers"
   end
 end
