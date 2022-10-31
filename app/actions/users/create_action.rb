@@ -1,5 +1,5 @@
-module SignUp
-  class CreateUserAction < ActionBase
+module Users
+  class CreateAction < ActionBase
     expects :user
 
     executed do |ctx|

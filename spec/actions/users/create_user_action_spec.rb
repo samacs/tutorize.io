@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SignUp::CreateUserAction, type: :action do
+RSpec.describe Users::CreateAction, type: :action do
   subject(:result) { described_class.execute(context) }
 
   let(:context) { { user: } }

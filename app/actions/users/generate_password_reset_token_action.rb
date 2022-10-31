@@ -1,4 +1,4 @@
-module ResetPassword
+module Users
   class GeneratePasswordResetTokenAction < ActionBase
     expects :user
 

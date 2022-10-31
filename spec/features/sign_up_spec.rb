@@ -15,7 +15,7 @@ RSpec.describe 'Sign up' do
     it { is_expected.to have_content t('users.new.heading') }
     it { is_expected.to have_button t('users.form.button.submit') }
     it { is_expected.to have_link t('users.form.link.sign_in') }
-    it { is_expected.to have_link t('users.form.link.resend_confirmation') }
+    it { is_expected.to have_link t('users.form.link.resend_confirmation', href: resend_confirmation_path) }
     it { is_expected.to have_select t('users.form.label.teacher_or_student'), options: role_options }
 
     it {

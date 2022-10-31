@@ -5,6 +5,6 @@ class SignUpWorker
     user = User.find_by(id: user_id)
     user.sign_up_role = sign_up_role
 
-    SignUpService.call(user:)
+    SignUpService.call(user:, role_name: user.sign_up_role)
   end
 end

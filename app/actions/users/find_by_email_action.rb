@@ -1,5 +1,5 @@
-module ResetPassword
-  class FindUserByEmailAction < ActionBase
+module Users
+  class FindByEmailAction < ActionBase
     expects :email
 
     promises :user

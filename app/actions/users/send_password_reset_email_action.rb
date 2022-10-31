@@ -1,4 +1,4 @@
-module ResetPassword
+module Users
   class SendPasswordResetEmailAction < ActionBase
     expects :user
 

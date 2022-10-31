@@ -27,19 +27,19 @@ RSpec.describe 'Confirm' do
         visit confirm_path(email:, confirmation_token:)
 
         expect(page).to have_current_path root_path
-        expect(page).to have_content expected_error_message
+        expect(page).to have_content expected_error
       end
     end
 
     context 'when the email is wrong' do
-      let(:expected_error_message) { t('users.confirm.error') }
+      let(:expected_error) { t('users.confirm.error') }
       let(:email) { 'wrong@email.com' }
 
       it_behaves_like 'user not found'
     end
 
     context 'when the confirmation token is wrong' do
-      let(:expected_error_message) { t('users.confirm.error') }
+      let(:expected_error) { t('users.confirm.error') }
       let(:confirmation_token) { 'wrong_confirmation_token' }
 
       it_behaves_like 'user not found'
