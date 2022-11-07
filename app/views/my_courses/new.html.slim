@@ -1,0 +1,5 @@
+- content_for(:title, t('.title'))
+
+.container-fluid.my-2
+  h1 = t('.heading')
+  = render 'form', course: @course, form_id: generate_form_id(@course), url: my_courses_path

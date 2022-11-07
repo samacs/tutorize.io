@@ -1,19 +1,42 @@
-header.p-3.sticky-top.text-bg-dark.mb-2
-  .container
-    nav.d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
-      a.d-flex.align-items-center.mb-2.mb-lg-0.text-white.text-decoration-none href=root_path
-        span.fs-4
-          | Tutorize
+header.sticky-top.p-2.text-bg-dark
+  nav.d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start.navbar.navbar-dark.bg-dark
+    - if signed_in?
+      a.bi.bi-list.fs-4.text-white.me-3[
+        href="#" data-sidebar-target="menuOpener" data-action="click->sidebar#toggle" class=(current_user.sidebar_open? ? 'd-none' : '')
+      ]
+      a.bi.bi-x.fs-4.text-white.me-3[
+        href="#" data-sidebar-target="menuCloser" data-action="click->sidebar#toggle" class=(current_user.sidebar_open? ? '' : 'd-none')
+      ]
+    a.d-flex.align-items-center.mb-2.mb-lg-0.text-white.text-decoration-none.me-2 href=root_path
+      strong.fs-4 Tutorize
+    - if !signed_in?
       ul.nav.col-12.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
         li
-          a.nav-link.px-2.text-secondary href=root_path
-            | Home
+          a.nav-link.px-2.text-secondary href=root_path Home
         li
-          a.nav-link.px-2.text-white href=courses_path
-            | Courses
+          a.nav-link.px-2.text-white href=courses_path Courses
         li
-          a.nav-link.px-2.text-white href=teachers_path
-            | Teachers
+          a.nav-link.px-2.text-white href=teachers_path Teacher
+    form.ms-lg-auto.col-12.col-lg-auto.mb-3.mb-lg-0.me-lg-3 role="search"
+      input.form-control.form-control-dark.text-bg-dark type="search" aria-label="Search" placeholder="Search..."
+    - if signed_in?
+      .dropdown.text-end
+        a.d-block.link-light.text-decoration-none.dropdown-toggle href="#" data-bs-toggle="dropdown" aria-expanded="false"
+          = image_tag current_user.avatar, width: 32, height: 32, class: 'rounded-circle me-2' if current_user.avatar.attached?
+          strong = current_user.name
+        ul.dropdown-menu.dropdown-menu-dark.text-small.shadow.dropdown-menu-end
+          li
+            a.dropdown-item href=new_my_course_path
+              | New course...
+          li
+            a.dropdown-item href=profile_path
+              | Profile
+          li
+            hr.dropdown-divider
+          li
+            a.dropdown-item href=sign_out_path data-turbo-method="delete"
+              | Sign out
+    - else
       .text-end
         = link_to 'Sign in', sign_in_path, class: 'btn btn-outline-light me-2'
         = link_to 'Sign up', sign_up_path, class: 'btn btn-warning'

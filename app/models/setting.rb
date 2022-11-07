@@ -13,6 +13,15 @@ class Setting < RailsSettings::Base
         type: :string,
         default: 'Tutorize',
         validates: { presence: true }
+  field :maximum_lesson_duration,
+        type: :decimal,
+        default: 5.0
+  field :start_end_minutes_lower_threshold,
+        type: :decimal,
+        default: 10.0
+  field :start_end_minutes_upper_threshold,
+        type: :decimal,
+        default: 10.0
 
   class << self
     def default_email_from

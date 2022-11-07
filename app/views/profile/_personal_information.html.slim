@@ -1,0 +1,25 @@
+.container-fluid.py-3
+  .row
+    .col-md-3
+      .form-group.mb-3
+        = f.label :first_name
+        = f.text_field :first_name, class: 'form-control'
+    .col-md-3
+      .form-group.mb-3
+        = f.label :last_name
+        = f.text_field :last_name, class: 'form-control'
+  .row
+    .col-md-3
+      .form-group.mb-3
+        = f.label :password
+        = f.password_field :password, class: 'form-control'
+    .col-md-3
+      .form-group.mb-3
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: 'form-control'
+  .row
+    .col-md-3
+      .form-group.mb-3
+        = f.label :avatar, class: 'form-label'
+        = f.file_field :avatar, class: 'form-control'
+        = image_tag current_user.avatar, class: 'img-fluid' if current_user.avatar.attached?

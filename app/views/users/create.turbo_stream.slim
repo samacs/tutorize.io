@@ -3,6 +3,6 @@ ruby:
 
 = turbo_stream.replace form_id do
   .alert.alert-success role="alert"
-    h4.alert-heading = t('.heading', user_name: user.first_name)
+    h4.alert-heading = t('.heading', user_name: @user.first_name)
     hr
     p == t('.message', sign_in_link:)

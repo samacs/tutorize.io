@@ -8,7 +8,9 @@ module SessionManagement
   protected
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session.key?(:user_id)
+    return unless session.key?(:user_id)
+
+    @current_user ||= User.preload(:roles).find_by(id: session[:user_id]).decorate
   end
 
   def sign_in!(user)
@@ -30,6 +32,14 @@ module SessionManagement
   def require_user
     return if signed_in?
     # TODO: Save previous URL and redirect
+  end
+
+  def require_teacher
+    return redirect_back_or_default root_path unless signed_in? && current_user.is_teacher?
+  end
+
+  def require_student
+    return redirect_back_or_default root_path unless signed_in? && current_user.is_teacher?
   end
 
   def require_no_user

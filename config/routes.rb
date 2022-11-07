@@ -21,7 +21,18 @@ Rails.application.routes.draw do
   get '/resend-confirmation', to: 'confirmations#new'
   post '/resend-confirmation', to: 'confirmations#create'
 
-  resources :courses
+  get '/profile', to: 'profile#edit'
+  patch '/profile', to: 'profile#update'
+
+  get '/settings', to: 'settings#edit'
+  patch '/settings', to: 'settings#update'
+
+  resources :courses do
+    resources :lessons do
+      resources :enrollments
+      resources :lectures
+    end
+  end
   resources :teachers
 
   # Authenticated routes
@@ -30,6 +41,11 @@ Rails.application.routes.draw do
 
     root 'dashboard#index'
   end
+
+  resources :my_courses, path: '/my-courses' do
+    resources :lessons, controller: :my_lessons
+  end
+  resources :availabilities
 
   # System routes
   if Rails.env.development?
@@ -43,5 +59,7 @@ Rails.application.routes.draw do
   root 'static_pages#show', page: 'home'
 
   # Catch-all route to render static pages
-  get '/*page', to: 'static_pages#show', as: :static_pages
+  get '/*page', to: 'static_pages#show', as: :static_pages, constraints: lambda { |req|
+    req.fullpath !~ %r{^\assets|rails/.*}
+  }
 end

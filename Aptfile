@@ -3,3 +3,4 @@ libvips
 imagemagick
 libvips-dev
 libvips-tools
+libjpeg-turbo-dev

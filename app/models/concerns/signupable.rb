@@ -9,7 +9,9 @@ module Signupable
     validates :sign_up_role,
               inclusion: { in: SIGN_UP_ROLES }
 
-    after_create :call_sign_up_worker
+    after_create :sign_up!
+
+    after_commit :assign_sign_up_role!, on: :create
   end
 
   def sign_up_role
@@ -18,7 +20,11 @@ module Signupable
 
   private
 
-  def call_sign_up_worker
-    SignUpWorker.perform_async(id, sign_up_role)
+  def assign_sign_up_role!
+    add_role sign_up_role unless has_role?(sign_up_role)
+  end
+
+  def sign_up!
+    SignUpWorker.perform_async(id)
   end
 end

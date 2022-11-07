@@ -1,15 +1,13 @@
 class User < ApplicationRecord
-  DEFAULT_TIME_ZONE = 'UTC'.freeze
-  DEFAULT_LOCALE    = 'en'.freeze
   TEACHER_ROLE      = 'teacher'.freeze
   STUDENT_ROLE      = 'student'.freeze
 
-  include Storext.model
   include Tokenizable
   include Confirmable
   include Signupable
   include Sessionable
   include PasswordResettable
+  include UserPreferences
 
   has_secure_password
 
@@ -17,12 +15,24 @@ class User < ApplicationRecord
 
   rolify
 
-  store_attributes :preferences do
-    time_zone String, default: DEFAULT_TIME_ZONE
-    locale String, default: DEFAULT_LOCALE
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_limit: [120, 120]
+    attachable.variant :normal, resize_to_imit: [620, 620]
+    attachable.variant :list_item, resize_to_limit: [480, 480]
   end
 
+  has_many :courses, foreign_key: :teacher_id, dependent: :destroy, inverse_of: :teacher
+  has_many :lessons, foreign_key: :teacher_id, dependent: :destroy, inverse_of: :teacher
+  has_many :enrolled_students, through: :lessons, source: :students
+  has_many :availabilities, foreign_key: :teacher_id, dependent: :destroy, inverse_of: :teacher
+  has_many :enrollments, foreign_key: :student_id, dependent: :destroy, inverse_of: :student
+
   scope :by_email, ->(email) { where(email:) }
+  scope :teacher, -> { with_role(:teacher) }
+  scope :student, -> { with_role(:student) }
+
+  delegate :available_time_slots,
+           to: :availabilities
 
   validates :first_name,
             :last_name,
@@ -43,12 +53,18 @@ class User < ApplicationRecord
 
   before_validation :downcase_email!
 
-  before_create :set_default_preferences
-
   def password=(value)
     @changing_password = true if value.present?
 
     super
+  end
+
+  def enrolled?(lesson)
+    enrollment_for_lesson(lesson).present?
+  end
+
+  def enrollment_for_lesson(lesson)
+    enrollments.upcoming.by_lesson(lesson).take
   end
 
   private
@@ -59,15 +75,5 @@ class User < ApplicationRecord
 
   def changing_password?
     @changing_password || false
-  end
-
-  def set_default_preferences
-    default_preferences.each do |key, value|
-      preferences[key] = value if preferences[key].blank?
-    end
-  end
-
-  def default_preferences
-    { 'time_zone' => DEFAULT_TIME_ZONE, 'locale' => DEFAULT_LOCALE }
   end
 end

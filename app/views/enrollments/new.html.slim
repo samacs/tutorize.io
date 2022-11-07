@@ -1,0 +1,41 @@
+- content_for(:title, "New enrollment for #{@course.name} - #{@lesson.name}")
+
+.container-fluid.my-3
+  h3 New enrollment for #{@course.name} - #{@lesson.name}
+
+.container-fluid.my-3
+  = turbo_frame_tag :calendar do
+    = month_calendar do |date|
+      - time_slots = @available_time_slots.fetch(date, [])
+      = date
+      - if time_slots.any?
+        ul.list-unstyled
+          - time_slots.each do |(time_slot, spots)|
+            li.d-grid.gap-2
+              button.btn.btn-success.btn-sm.my-2 type="button" data-bs-toggle="modal" data-bs-target="#enroll-#{@course.slug}-#{@lesson.slug}-#{date}-#{time_slot.to_s.tr('.', '-')}"
+                | #{time_from_decimal(time_slot.begin)} to #{time_from_decimal(time_slot.end)}
+                small.ms-2 = t('spots', count: spots)
+              .modal.fade id="enroll-#{@course.slug}-#{@lesson.slug}-#{date}-#{time_slot.to_s.tr('.', '-')}" tabindex="-1" aria-hidden="true"
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      h1.modal-title.fs-5
+                        | Enrolling to #{@course.name} - #{@lesson.name}
+                      button.btn-close type="button" data-bs-dismiss="moadl" aria-label="Close"
+                    .modal-body
+                      p
+                        | Enrolling to
+                        strong.mx-1 #{@course.name} - #{@lesson.name}
+                        | by
+                        strong.mx-1 #{@lesson.teacher.name}
+                      p
+                        | Lecture duration:
+                        strong.ms-1 #{relative_time(@lesson.duration)}
+                      p
+                        | Starting on
+                        strong.mx-1 #{date}
+                        | from
+                        strong.mx-1 #{time_from_decimal(time_slot.begin)}
+                        | to
+                        strong.ms-1 #{time_from_decimal(time_slot.end)}
+                      = render 'form', enrollment: @enrollment, form_id: generate_form_id(@enrollment), course: @course, lesson: @lesson, time_slot:, date:

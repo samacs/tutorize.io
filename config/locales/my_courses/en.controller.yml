@@ -1,0 +1,6 @@
+en:
+  my_courses:
+    create:
+      success: "Course <strong>%{course_name}</strong> created successfully"
+    update:
+      success: "Course <strong>%{course_name}</strong> updated successfully"

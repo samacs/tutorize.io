@@ -34,3 +34,18 @@ en:
     zero: "No errors"
     one: "1 error"
     other: "%{count} errors"
+  created_at: "Created at %{date}"
+  updated_at: "Last updated at %{date}"
+  hours:
+    one: "1 hour"
+    other: "%{count} hours"
+  minutes:
+    one: "1 minute"
+    other: "%{count} minutes"
+  seconds:
+    one: "1 second"
+    other: "%{count} seconds"
+  spots:
+    zero: "No spots left"
+    one: "1 spot left"
+    other: "%{count} spots left"

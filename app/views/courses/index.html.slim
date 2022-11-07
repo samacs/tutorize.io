@@ -1,0 +1,9 @@
+- content_for(:title, 'Courses')
+
+.container-fluid.my-3
+  h1 Courses
+  .row.row-cols-1.row-cols-md-4.g-2
+    = render @courses
+
+  .d-flex.justify-content-center.my-3.align-items-center
+    == pagy_bootstrap_nav(@pagy)
