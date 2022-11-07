@@ -1,0 +1,35 @@
+= form_with(model: course, id: form_id, url:) do |f|
+  = hidden_field_tag :form_id, form_id
+  ul.nav.nav-tabs
+    li.nav-item role="presentation"
+      button#course-information-tab.nav-link.active type="button" data-bs-toggle="tab" data-bs-target="#course-information-tab-pane" role="tab" aria-controls="course-information-tab-pane" aria-selected="true"
+        = t('.link.course_information')
+    li.nav-item role="presentation"
+      button#course-images-tab.nav-link type="button" data-bs-toggle="tab" data-bs-target="#course-images-tab-pane" role="tab" aria-controls="course-images-tab-pane" aria-selected="false"
+        = t('.link.course_images')
+  .tab-content.mb-3.border-start.border-end.border-bottom.rounded-bottom
+    #course-information-tab-pane.tab-pane.p-3.fade.show.active role="tabpanel" aria-labelledby="course-information-tab" tabindex="0"
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :name
+            = f.text_field :name, placeholder: Faker::Educator.subject, class: 'form-control'
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :description
+            = f.rich_text_area :description, placeholder: Faker::Lorem.paragraphs(number: 2).join("\r\n"), class: 'form-control'
+    #course-images-tab-pane.tab-pane.p-3.fade
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :cover_image, class: 'form-label'
+            = f.file_field :cover_image, class: 'form-control'
+            = image_tag course.cover_image.variant(:normal), class: 'img-fluid' if course.cover_image.attached?
+
+  .row
+    .col-md-6.d-flex.justify-content-between
+      = link_to t('.link.cancel'), my_courses_path, class: 'btn btn-secondary'
+      = f.submit class: 'btn btn-success' do
+        i.bi.bi-check-square
+        = t('.button.submit')

@@ -1,0 +1,40 @@
+= form_with(model: lesson, id: form_id, url:) do |f|
+  = hidden_field_tag :form_id, form_id
+  = render 'shared/form_errors', resource: lesson
+  ul.nav.nav-tabs
+    li.nav-item role="presentation"
+      button#lesson-information-tab.nav-link.active type="button" data-bs-toggle="tab" data-bs-target="#lesson-information-tab-pane" role="tab" aria-controls="course-information-tab-pane" aria-selected="true"
+        | Lesson information
+    li.nav-item role="presentation"
+      button#lesson-images-tab.nav-link type="button" data-bs-toggle="tab" data-bs-target="#lesson-images-tab-pane" role="tab" aria-controls="lesson-images-tab-pane" aria-selected="fasle"
+        | Images
+  .tab-content.mb-3.border-start.border-end.border-bottom.rounded-bottom
+    #lesson-information-tab-pane.tab-pane.p-3.fade.show.active role="tabpanel" aria-labelledby="lesson-information-tab" tabindex="0"
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :name
+            = f.text_field :name, placeholder: Faker::Educator.subject, class: 'form-control'
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :description
+            = f.rich_text_area :description, placeholder: Faker::Lorem.paragraphs(number: 2).join("\r\n"), class: 'form-control'
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :duration
+            = f.select :duration, duration_select_options, {}, class: 'form-control'
+    #lesson-images-tab-pane.tab-pane.p-3.fade
+      .row
+        .col-md-6
+          .form-group.mb-3
+            = f.label :cover_image, class: 'form-label'
+            = f.file_field :cover_image, class: 'form-control'
+            = image_tag lesson.cover_image.variant(:normal), class: 'img-fluid' if lesson.cover_image.attached?
+  .row
+    .col-md-6.d-flex.justify-content-between
+      = link_to 'Cancel', my_course_lessons_path(lesson.course), class: 'btn btn-secondary'
+      = f.submit class: 'btn btn-success' do
+        i.bi.bi-check-square
+        | Create lesson

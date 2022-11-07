@@ -1,0 +1,28 @@
+- content_for(:title, @course.name)
+
+.container-fluid.my-3
+  .row
+    .col.pt-4.pt-lg-0
+      h1 = @course.name
+      hr
+      p by #{@course.teacher.name}, created #{time_ago_in_words(@course.created_at)} ago
+      = image_tag @course.cover_image.variant(:normal), class: 'float-end shadow', alt: @course.name
+      == @course.description
+  .row
+    .col
+      h4 Lessons
+      #lessons-accordion.accordion
+        - @course.lessons.each do |lesson|
+          .accordion-item
+            h2.accordion-header id="lesson-#{lesson.slug}-heading"
+              button.accordion-button type="button" data-bs-toggle="collapse" data-bs-target="#lesson-#{lesson.slug}" aria-expanded="false" aria-controls="lesson-#{lesson.slug}"
+                = lesson.name
+            .accordion-collapse.collapse aria-labelledby="lesson-#{lesson.slug}-heading" id="lesson-#{lesson.slug}" data-bs-parent="#lessons-accordion"
+              .accordion-body
+                p
+                  | Duration: #{relative_time(lesson.duration)}
+                == lesson.description
+                - if current_user.enrolled?(lesson)
+                  = link_to 'Already enrolled', course_lesson_enrollment_path(lesson.course, lesson, current_user.enrollment_for_lesson(lesson))
+                - else
+                  = link_to 'Enroll now', new_course_lesson_enrollment_path(lesson.course, lesson), class: 'btn btn-success'

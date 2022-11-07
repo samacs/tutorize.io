@@ -1,0 +1,49 @@
+.container-fluid.py-3
+  h3 Week availabilities
+  = week_calendar(partial: 'week') do |date|
+    .d-flex.justify-content-center.align-items-stretch.flex-column
+      = link_to new_availability_path(weekday: date.wday), class: 'btn btn-success', data: { turbo_frame: :modal } do
+        i.bi.bi-plus-square.me-2
+        | Add availability
+    ul id="#{Date::DAYNAMES[date.wday].downcase}-availabilities"
+      - @week_availabilities.fetch(date.wday, []).map(&:decorate).each do |availability|
+        li id=dom_id(availability)
+          .d-flex.justify-content-between.align-items-center
+            = link_to "From #{availability.from_time} to #{availability.to_time}", edit_availability_path(availability), class: availability.availability_css_class, data: { turbo_frame: :modal }
+            = link_to availability, class: 'link-danger', data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do
+              i.bi.bi-x-circle
+.container-fluid.py-3
+  h3 Date availabilities
+  = turbo_frame_tag :calendar do
+    = month_calendar(events: @availabilities, attribute: :date, end_attribute: :date) do |date, availabilities|
+      .d-flex.justify-content-center.align-items-stretch.flex-column
+        = link_to new_availability_path(date: date.to_date), class: 'btn btn-success', data: { turbo_frame: :modal } do
+          i.bi.bi-plus-square.me-2 data-bs-toggle="tooltip" data-bs-title="Add availability for date #{date}"
+          | Add availability
+        .d-flex.justify-content-between.align-items-center
+          strong = date
+        ul id="#{date}-availabilities"
+          - availabilities.map(&:decorate).each do |availability|
+            li id=dom_id(availability)
+              .d-flex.justify-content-between.align-items-center
+                = link_to "From #{availability.from_time} to #{availability.to_time}", edit_availability_path(availability), class: availability.availability_css_class, data: { turbo_frame: :modal }
+                = link_to availability, class: 'link-danger', data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do
+                  i.bi.bi-x-circle
+        - if @available_time_slots.key?(date)
+          .d-flex.justify-content-center.align-items-end
+            button.btn.btn-primary type="button" data-bs-toggle="modal" data-bs-target="#day-availability-#{date}"
+              | Day availability
+          .modal.fade id="day-availability-#{date}" tabindex="-1" aria-labelledby="day-availability-#{date}-title" aria-hidden="true"
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  h1.modal-title id="day-availability-#{date}-title"
+                    | #{date} availability
+                  button.btn.btn-close type="button" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true"
+                .modal-body
+                  ul
+                    - @available_time_slots[date].each do |interval|
+                      li = "From #{time_from_decimal(interval.first)} to #{time_from_decimal(interval.last)}"
+                .modal-footer
+                  button.btn.btn-secondary type="button" data-bs-dismiss="modal"
+                    | Close

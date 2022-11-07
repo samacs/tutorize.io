@@ -1,0 +1,16 @@
+li.list-group-item
+  .row
+    .col-md-8
+      .d-flex.justify-content-start
+        = check_box_tag course.id, course.id, nil, class: 'form-check-input me-2'
+        = link_to edit_my_course_path(course) do
+          h3.mb-1 = course.name
+      .d-flex.justify-content-between
+        .row
+          .col
+            == course.description
+            = render 'lessons', lessons: course.lessons, course: course
+    .col-md-4
+      = image_tag course.cover_image.variant(:normal), class: 'img-fluid'
+  .d-flex.justify-content-start
+        span.small == "#{t('created_at', date: local_time(course.created_at))}, #{t('updated_at', date: local_time(course.updated_at))}"

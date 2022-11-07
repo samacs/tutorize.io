@@ -1,0 +1,22 @@
+= form_with(model: user, id: form_id, url: profile_path, class: 'mb-3') do |f|
+  = hidden_field_tag :form_id, form_id
+  ul.nav.nav-tabs
+    li.nav-item role="presentation"
+      button#personal-information-tab.nav-link.active type="button" data-bs-toggle="tab" data-bs-target="#personal-information-tab-pane" role="tab" aria-controls="personal-information-tab-pane" aria-selected="true"
+        | Personal information
+    - if current_user.is_teacher?
+      li.nav-item role="presentation"
+        button#availability-tab.nav-link type="button" data-bs-toggle="tab" data-bs-target="#availability-tab-pane" role="tab" aria-controls="availability-tab-pane"
+          | Availability
+  .tab-content.mb-3.border-start.border-end.border-bottom.rounded-bottom#profile-tabs
+    #personal-information-tab-pane.tab-pane.fade.show.active role="tabpanel" aria-labelledby="personal-information-tab" tabindex="0"
+      = render 'personal_information', f:
+    - if current_user.is_teacher?
+      #availability-tab-pane.tab-pene.fade role="tabpanel" aria-labelledby="avaialbility-tab" tabindex="0"
+        = render 'availability', f:, user:
+  .row
+    .col-md-6.d-flex.justify-content-between
+      = link_to 'Cancel', root_path, class: 'btn btn-secondary'
+      = f.button class: 'btn btn-success' do
+        i.bi.bi-check-square
+        |  Save profile

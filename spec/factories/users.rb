@@ -8,10 +8,6 @@ FactoryBot.define do
     terms_of_service { true }
     sign_up_role { User::STUDENT_ROLE }
 
-    after(:create) do |user, _evaluator|
-      user.add_role user.sign_up_role unless user.has_role?(user.sign_up_role)
-    end
-
     trait :resetting_password do
       password_reset_token_sent_at { Time.current }
       password_reset_token { 'secret_token' }

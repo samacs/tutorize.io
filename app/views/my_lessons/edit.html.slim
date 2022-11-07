@@ -1,0 +1,5 @@
+- content_for(:title, @lesson.name)
+
+.container-fluid.my-2
+  h1 = @lesson.name
+  = render 'form', lesson: @lesson, form_id: generate_form_id(@lesson), url: my_course_lesson_path(@course, @lesson)

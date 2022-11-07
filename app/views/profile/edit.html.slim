@@ -1,0 +1,5 @@
+- content_for(:title, 'Edit profile')
+
+.container-fluid.my-2
+  h3 Edit profile
+  = render 'form', user: current_user, form_id: generate_form_id(current_user)

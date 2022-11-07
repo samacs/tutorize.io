@@ -1,0 +1,20 @@
+en:
+  my_courses:
+    index:
+      title: "My courses"
+      heading: "My courses"
+      link:
+        new_course: "Create a new course"
+    new:
+      title: "New course"
+      heading: "New course"
+    edit:
+      title: "Course %{course_name}"
+      heading: "Course %{course_name}"
+    form:
+      button:
+        submit: "Create course"
+      link:
+        cancel: "Cancel"
+        course_information: "Information"
+        course_images: "Images"

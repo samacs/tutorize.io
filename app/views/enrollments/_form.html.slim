@@ -1,0 +1,7 @@
+= form_with(model: enrollment, url: course_lesson_enrollments_path(course, lesson), id: form_id, class: 'd-grid gap-2') do |f|
+  = hidden_field_tag :form_id, form_id
+  = f.hidden_field :date, value: date
+  = f.hidden_field :start_time, value: time_slot.begin
+  = f.hidden_field :end_time, value: time_slot.end
+  = render 'shared/form_errors', resource: enrollment
+  = f.button 'Enroll now', class: 'btn btn-success my-2'

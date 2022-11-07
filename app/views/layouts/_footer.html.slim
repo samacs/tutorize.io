@@ -1,6 +1,16 @@
-footer.fixed-bottom.text-bg-dark.mt-2.d-flex.flex-wrap.justify-content-between.align-items-center.py-3.border-top
-  .container
+footer.container-fluid.text-bg-dark.mt-2.d-flex.flex-wrap.justify-content-between.align-items-center.py-3.border-top
+  .container.d-flex.justify-content-between
     p.col-md-4.mb-0.text-muted
       | &copy; Tutorize #{Date.current.year}
-    a.col-md-4.d-flex.align-items-center.justify-content-center.mb-3.mb-md-0.me-md-auto.link-dark.text-decoration-none href=root_path
+    a.col-md-4.d-flex.align-items-center.justify-content-center.mb-3.mb-md-0.me-md-auto.link-light.text-decoration-none href=root_path
       | Tutorize
+    ul.nav.col-md-4.justify-content-end
+      li.nav-item
+        a.nav-link.px-2.text-muted href=root_path
+          | Home
+      li.nav-item
+        a.nav-link.px-2.text-muted href=courses_path
+          | Courses
+      li.nav-item
+        a.nav-link.px-2.text-muted href=teachers_path
+          | Teachers

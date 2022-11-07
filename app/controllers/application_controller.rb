@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include ThemeManagement
   include RedirectionManagement
   include SessionManagement
+  include Pagy::Backend
 
   before_action :require_user
 

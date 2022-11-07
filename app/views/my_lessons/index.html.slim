@@ -1,0 +1,20 @@
+- content_for(:title, "#{@course.name} lessons")
+
+.container-fluid
+  .d-flex.justify-content-between.align-items-center.my-2
+    h1 #{@course.name} lessons
+    = link_to new_my_course_lesson_path(@course), class: 'btn btn-success' do
+      i.bi.bi-plus-square.me-2
+      | New course lesson
+  .row
+    .col-md-3
+    .col-md-9
+      .d-flex.justify-content-between.align-items-center.my-2
+        - if @lessons.empty?
+          .d-flex.justify-content-center.align-items-center.my-4.flex-column
+            h3 No lessons yet
+            = link_to new_my_course_lesson_path(@course), class: 'btn btn-success' do
+              i.bi.bi-plus-square.me-2
+              | New course lesson
+        - else
+          = render 'lessons', course: @course, lessons: @lessons

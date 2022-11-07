@@ -1,0 +1,11 @@
+h4
+  = link_to 'Lessons', my_course_lessons_path(course)
+- if lessons.any?
+  ul
+    = render partial: 'lesson', collection: lessons, as: :lesson, locals: { course: }
+- else
+  strong No lessons yet for this course
+.d-flex.justify-content-end
+  = link_to new_my_course_lesson_path(course), class: 'btn btn-success mb-2' do
+    i.bi.bi-plus-square.me-2
+    | Add a lesson

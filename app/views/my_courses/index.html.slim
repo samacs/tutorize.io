@@ -1,0 +1,20 @@
+- content_for(:title, t('.title'))
+
+.container-fluid
+  .d-flex.justify-content-between.align-items-center.my-2
+    h1 = t('.heading')
+    = link_to new_my_course_path, class: 'btn btn-success' do
+      i.bi.bi-plus-square.me-2
+      = t('.link.new_course')
+  .row
+    .col-md-3
+    .col-md-9
+      .d-flex.justify-content-between.align-items-center.my-2
+      - if @courses.empty?
+        .d-flex.justify-content-center.align-items-center.my-4.flex-column
+          h3 No courses yet
+          = link_to new_my_course_path, class: 'btn btn-success' do
+            i.bi.bi-plus-square.me-2
+            = t('.link.new_course')
+      - else
+        = render 'courses', courses: @courses

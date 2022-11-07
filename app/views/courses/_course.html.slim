@@ -1,0 +1,28 @@
+.col
+  .card.h-100
+    = image_tag course.cover_image, class: 'card-img-top', alt: course.name
+    .card-body
+      h5.card-title
+        = link_to course.name, course
+      .card-text
+        == truncate(course.description.to_plain_text, length: 240, omission: '...', escape: false)
+    ul.list-group.list-group-flush
+      li.list-group-item
+        | Teacher: #{course.teacher.name}
+      li.list-group-item
+        | Lessons: #{course.lessons.count}
+        ul
+          - course.lessons.newest.take(3).each do |lesson|
+            li
+              h4
+                = link_to lesson.name, course_lesson_path(course, lesson)
+              div
+                small = relative_time(lesson.duration)
+              - if current_user.enrolled?(lesson)
+                = link_to 'Already enrolled', course_lesson_enrollment_path(course, lesson, current_user.enrollment_for_lesson(lesson))
+              - else
+                = link_to 'Enroll now', new_course_lesson_enrollment_path(course, lesson), class: 'btn btn-success'
+          - if course.lessons.count > 3
+            li = link_to 'View more lessons >>', course
+    .card-footer.text-muted
+      | Created #{time_ago_in_words(course.created_at)} ago

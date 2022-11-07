@@ -1,0 +1,23 @@
+- content_for(:title, "Enrollment for #{@course.name} - #{@lesson.name}")
+
+.container-fluid.my-3
+  h1
+    | Enrollment for #{@course.name} - #{@lesson.name} for #{@enrollment.lecture.starts_at}
+  p
+    strong.me-1 Course:
+    = @enrollment.course.inspect
+  p
+    strong.me-1 Lesson:
+    = @enrollment.lesson.inspect
+  p
+    strong.me-1 Lecture:
+    = @enrollment.lecture.inspect
+  p
+    strong.me-1 Student:
+    = @enrollment.student.inspect
+  p
+    strong.me-1 Teacher:
+    = @enrollment.teacher.inspect
+  p
+    strong.me-1 Enrollment:
+    = @enrollment.inspect
